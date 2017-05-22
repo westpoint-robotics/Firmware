@@ -8,7 +8,6 @@ then
 	if ms5611 start
 	then
 	fi
-
 else
 	if ver hwcmp AEROFC_V1
 	then
@@ -152,11 +151,6 @@ then
 		if hmc5883 -C -T -S -R 8 start
 		then
 		fi
-
-		if meas_airspeed start -b 2
-		then
-		fi
-
 	else
 		# FMUv2
 		if mpu6000 start
@@ -343,7 +337,6 @@ fi
 
 if ver hwcmp PX4FMU_V4PRO
 then
-
 	# Internal SPI bus ICM-20608-G
 	if mpu6000 -R 2 -T 20608 start
 	then
@@ -368,7 +361,6 @@ then
 	if hmc5883 -C -T -X start
 	then
 	fi
-
 fi
 
 if ver hwcmp PX4FMU_V5
@@ -398,12 +390,6 @@ then
 	if hmc5883 -C -T -X start
 	then
 	fi
-
-	# Possible external airspeed sensor
-	if meas_airspeed start -b 2
-	then
-	fi
-
 fi
 
 if ver hwcmp AEROCORE2
@@ -414,13 +400,30 @@ fi
 
 if sdp3x_airspeed start
 then
-else
-	if meas_airspeed start
-	then
-	else
-		ets_airspeed start
-		ets_airspeed start -b 1
-	fi
+fi
+
+if ms5525_airspeed start
+then
+fi
+
+if ms5525_airspeed start -b 2
+then
+fi
+
+if ms4525_airspeed start
+then
+fi
+
+if ms4525_airspeed start -b 2
+then
+fi
+
+if ets_airspeed start
+then
+fi
+
+if ets_airspeed start -b 1
+then
 fi
 
 # Wait 20 ms for sensors (because we need to wait for the HRT and work queue callbacks to fire)
