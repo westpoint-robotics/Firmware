@@ -926,10 +926,7 @@ MulticopterAttitudeControl::control_attitude(float dt)
 	}
 
 	/* feed forward yaw setpoint rate */
-	// hack we use yaw_sp_move_rate to set yaw_rate, we removed yaw weight
-	// note that this hack can be eliminated by setting yaw_ff to 0
-	//_rates_sp(2) += _v_att_sp.yaw_sp_move_rate * yaw_w * _params.yaw_ff;
-	_rates_sp(2) += _v_att_sp.yaw_sp_move_rate * _params.yaw_ff;
+	_rates_sp(2) += _v_att_sp.yaw_sp_move_rate * yaw_w * _params.yaw_ff;
 
 	/* weather-vane mode, dampen yaw rate */
 	if ((_v_control_mode.flag_control_velocity_enabled || _v_control_mode.flag_control_auto_enabled) &&
