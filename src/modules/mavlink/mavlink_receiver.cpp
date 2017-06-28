@@ -1281,7 +1281,12 @@ MavlinkReceiver::handle_message_set_attitude_target(mavlink_message_t *msg)
 					if (!ignore_attitude_msg) { // only copy att sp if message contained new data
 						mavlink_quaternion_to_euler(set_attitude_target.q,
 									    &_att_sp.roll_body, &_att_sp.pitch_body, &_att_sp.yaw_body);
-						_att_sp.yaw_sp_move_rate = 0.0;
+						
+						// hack
+						// we set yaw rate for the controller
+						_att_sp.yaw_sp_move_rate = set_attitude_target.body_yaw_rate;
+						
+
 						memcpy(_att_sp.q_d, set_attitude_target.q, sizeof(_att_sp.q_d));
 						_att_sp.q_d_valid = true;
 					}
